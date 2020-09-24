@@ -16,9 +16,13 @@ app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`));
 // db user password username: charliedowd   password: 9iPe9hQw2XcJh9T
 // mongo atlas connection string: mongodb+srv://charliedowd:<password>@cluster0.ejdj5.mongodb.net/<dbname>?retryWrites=true&w=majority
 
-mongoose.connect(process.env.MONGODB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING, 
+    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, (err) => {
     if (err) throw err
     else {
         console.log('MongoDB connection established!')
     }
 })
+
+// set up user middleware 
+app.use('/users', require('./routes/userRouter'))
