@@ -4,6 +4,15 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const auth = require('../middleware/auth')
 
+router.get('/', auth, async (req, res) => {
+    const user = await User.findById(req.user)
+    if (!user) res.status(400).json({ message: 'cannot get authed user' })
+    res.json({
+        displayName: user.displayName,
+        id: user._id
+    })
+})
+
 router.post('/register', async (req, res) => {
     try {
         let { email, password, passwordCheck, displayName } = req.body
