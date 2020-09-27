@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './components/pages/Home';
 import Login from './components/auth/Login'
 import Register from './components/auth/Register';
-import HomeNav from './components/pages/HomeNav';
+import Loading from './components/Loading';
+import HomeNav from './components/HomeNav';
 import UserContext from './context/UserContext';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -16,6 +17,7 @@ function App() {
     token: undefined,
     user: undefined
   })
+  const [ loadingUser, setLoadingUser ] = useState(true)
 
 
   useEffect(() => {
@@ -36,13 +38,13 @@ function App() {
         const user = await axios.get('http://localhost:5000/users/', 
         { headers: { 'x-auth-token': token } })
         setUserData(user)
-        
       }
+      setLoadingUser(false)
     }
     checkLoggedIn()
   }, [])
 
-  console.log(userData)
+  if (loadingUser) return <Loading />
 
   return (
     <Router>
