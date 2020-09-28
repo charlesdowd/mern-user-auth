@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import UserContext from '../../context/UserContext';
 import axios from 'axios';
 
 export default function Register() {
@@ -9,8 +10,10 @@ export default function Register() {
     const [password, setPassword] = useState('')
     const [passwordCheck, setPasswordCheck] = useState('')
     const [displayName, setDisplayName] = useState('')
-
+    const { userData } = useContext(UserContext)
     const history = useHistory()
+
+    if (userData.user) history.push('/')
 
     const onEmailChange = (e) => {
         e.preventDefault()

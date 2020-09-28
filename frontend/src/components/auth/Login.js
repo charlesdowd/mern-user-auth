@@ -8,8 +8,10 @@ import UserContext from '../../context/UserContext';
 export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const { setUserData } = useContext(UserContext)
+    const { userData, setUserData } = useContext(UserContext)
     const history = useHistory()
+
+    if (userData.user) history.push('/')
 
     const submitLogin = async (e) => {
         e.preventDefault()
