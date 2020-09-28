@@ -63,13 +63,13 @@ router.post('/login', async (req, res) => {
         // does the email exist in the database?
         const existingUser = await User.findOne({ email: email })
         if (!existingUser) {
-            return res.status(400).send('Email does not match an existing account.')
+            return res.status(400).json({ msg: 'Email does not match an existing account.' })
         }
         // check to see if password matches hashed password
         const isMatch = await bcrypt.compare(password, existingUser.password)
         
         if (!isMatch) {
-            return res.status(400).json({ message: 'Incorrect password.' })
+            return res.status(400).json({ msg: 'Incorrect password.' })
         }
 
         const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET)

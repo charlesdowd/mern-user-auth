@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Home from './components/pages/Home';
 import Login from './components/auth/Login'
 import Register from './components/auth/Register';
@@ -9,22 +10,26 @@ import HomeNav from './components/HomeNav';
 import UserContext from './context/UserContext';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 
 
 function App() {
-  const [userData, setUserData] = useState({
+  const [ userData, setUserData ] = useState({
     token: undefined,
     user: undefined
   })
   const [ loadingUser, setLoadingUser ] = useState(true)
 
+  
+
+  console.log('app UserData', userData)
 
   useEffect(() => {
     const checkLoggedIn = async () => {
-      let token = localStorage.getItem('auth-token')
-
-      console.log(token)
+    let token = localStorage.getItem('auth-token')
+      
+    console.log(token)
       // if auth-token key doesnt exist in localstorage set it to empty string
       if (token === null) {
         localStorage.setItem('auth-token', '')
@@ -35,9 +40,14 @@ function App() {
         { headers: { 'x-auth-token': token } })
 
       if (tokenResponse.data) {
-        const user = await axios.get('http://localhost:5000/users/', 
+        const userRes = await axios.get('http://localhost:5000/users/', 
         { headers: { 'x-auth-token': token } })
-        setUserData(user)
+        
+        setUserData({
+          token,
+          user: userRes.data
+        })
+
       }
       setLoadingUser(false)
     }
@@ -50,6 +60,7 @@ function App() {
     <Router>
       <UserContext.Provider value={{ userData, setUserData }}>
         <HomeNav />
+        <ToastContainer />
         <Switch>
           <Route exact path='/'> <Home /> </Route>
           <Route path='/login'> <Login /> </Route>

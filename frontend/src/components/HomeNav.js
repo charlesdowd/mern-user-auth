@@ -9,21 +9,21 @@ export default function HomeNav() {
 
     const logoutUser = () => {
         // reset context when user logs out
+        localStorage.setItem('auth-token', '')
+        
         setUserData({
             token: undefined,
             user: undefined
-        })
-
-        localStorage.setItem('auth-token', '')
+        })  
     }
-
+    console.log(userData.user)
     return (
         <Container>
             <Navbar bg="dark" variant="dark">
                 <Navbar.Brand className='pl-3' href="/">Test User Authentication</Navbar.Brand>
                 <Nav className="justify-content-end" style={{ width: "75%" }}>
 
-                    {userData.data ?
+                    {userData.user ?
                         <Nav.Link onClick={logoutUser}>Logout</Nav.Link>
                         :
                         <>
