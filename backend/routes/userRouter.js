@@ -25,7 +25,7 @@ router.post('/register', async (req, res) => {
             return res.status(400).send('Password needs to be at least 5 characters long.')
         }
         if (password !== passwordCheck) {
-            return res.status(400).send('Retyped password does not match.')
+            return res.status(400).send('Passwords do not match.')
         }
         // check if email already exists in the db
         const existingUser = await User.findOne({ email: email })

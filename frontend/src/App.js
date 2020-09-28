@@ -21,15 +21,12 @@ function App() {
   })
   const [ loadingUser, setLoadingUser ] = useState(true)
 
-  
-
-  console.log('app UserData', userData)
 
   useEffect(() => {
     const checkLoggedIn = async () => {
     let token = localStorage.getItem('auth-token')
       
-    console.log(token)
+
       // if auth-token key doesnt exist in localstorage set it to empty string
       if (token === null) {
         localStorage.setItem('auth-token', '')

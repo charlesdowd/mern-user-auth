@@ -16,7 +16,7 @@ export default function HomeNav() {
             user: undefined
         })  
     }
-    console.log(userData.user)
+    
     return (
         <Container>
             <Navbar bg="dark" variant="dark">
